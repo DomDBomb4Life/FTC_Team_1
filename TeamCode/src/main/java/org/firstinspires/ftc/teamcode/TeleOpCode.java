@@ -13,9 +13,9 @@ public class TeleOpCode extends LinearOpMode{
     private UltrasonicSensor ULT_SENSOR;
     private Servo ARM_SERVO;
     boolean FocusMode = false;
-    int Move_Power = 1;
-    @Overide
+    @Override
     public void runOpMode(){
+        int Move_Power = 1;
         R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
         ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
