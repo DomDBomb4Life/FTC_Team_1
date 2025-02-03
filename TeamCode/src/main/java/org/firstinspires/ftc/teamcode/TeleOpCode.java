@@ -18,7 +18,7 @@ public class TeleOpCode extends LinearOpMode{
         int Move_Power = 1;
         R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
-        ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
+        //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
         ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
         ARM_SERVO.setPosition(90);
         waitForStart();
