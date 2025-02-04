@@ -20,7 +20,7 @@ public class TeleOpCode extends LinearOpMode{
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
         //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
         ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
-        ARM_SERVO.setPosition(90);
+        ARM_SERVO.setPosition(0);
         waitForStart();
         while(opModeIsActive()){
             double LStickY = gamepad1.left_stick_y;
