@@ -12,10 +12,10 @@ public class TeleOpCode extends LinearOpMode{
     private DcMotor R_MOTOR, L_MOTOR;
     private UltrasonicSensor ULT_SENSOR;
     private Servo ARM_SERVO;
-    boolean FocusMode = false;
     @Override
     public void runOpMode(){
         int Move_Power = 1;
+        boolean FocusMode = false;
         R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
         //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
@@ -23,11 +23,12 @@ public class TeleOpCode extends LinearOpMode{
         ARM_SERVO.setPosition(90);
         waitForStart();
         while(opModeIsActive()){
-            double LStickX = gamepad1.left_stick_x;
-            double RStickY = gamepad1.right_stick_y;
+            double LStickY = gamepad1.left_stick_y;
+            double RStickX = gamepad1.right_stick_x;
             if(gamepad1.a){
                 if(FocusMode){
                     FocusMode = false;
+                    //Focus Mode enables slower move speed for precision
                 }
                 else{
                     FocusMode = true;
@@ -39,13 +40,13 @@ public class TeleOpCode extends LinearOpMode{
             else{
                 Move_Power = 1;
             }
-            if(LStickX != 0){
-                R_MOTOR.setPower(LStickX*Move_Power);
-                L_MOTOR.setPower(LStickX*Move_Power);
+            if(RStickX != 0){
+                R_MOTOR.setPower(RStickX*Move_Power);
+                L_MOTOR.setPower(-RStickX*Move_Power);
             }
-            else if(RStickY != 0){
-                R_MOTOR.setPower(RStickY*Move_Power);
-                L_MOTOR.setPower(-RStickY*Move_Power);
+            else if(LStickY != 0){
+                R_MOTOR.setPower(LStickY*Move_Power);
+                L_MOTOR.setPower(LStickY*Move_Power);
             }
             else{
                 R_MOTOR.setPower(0);
