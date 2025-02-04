@@ -15,12 +15,14 @@ public class TeleOpCode extends LinearOpMode{
     @Override
     public void runOpMode(){
         int Move_Power = 1;
-        boolean FocusMode = false;
+        boolean launch = false;
         R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
+        R_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
+        L_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
         //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
-        ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
-        ARM_SERVO.setPosition(0);
+        PLANE_SERVO = hardwareMap.get(Servo.class, "Plane Servo");
+        PLANE_SERVO.setPosition(0);
         waitForStart();
         while(opModeIsActive()){
             double LStickY = gamepad1.left_stick_y;
@@ -30,6 +32,9 @@ public class TeleOpCode extends LinearOpMode{
             }
             else{
                 Move_Power = 1;
+            }
+            if(gamepad1.x){
+                PLANE_SERVO.setPosition(90);
             }
             if(RStickX != 0){
                 R_MOTOR.setPower(RStickX*Move_Power);
