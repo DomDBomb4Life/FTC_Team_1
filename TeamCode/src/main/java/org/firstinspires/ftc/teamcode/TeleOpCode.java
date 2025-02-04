@@ -10,7 +10,7 @@ import java.lang.Math;
 public class TeleOpCode extends LinearOpMode{
     //WHEELS!
     private DcMotor R_MOTOR, L_MOTOR;
-    private UltrasonicSensor ULT_SENSOR;
+    //private UltrasonicSensor ULT_SENSOR;
     private Servo ARM_SERVO;
     @Override
     public void runOpMode(){
@@ -26,15 +26,6 @@ public class TeleOpCode extends LinearOpMode{
             double LStickY = gamepad1.left_stick_y;
             double RStickX = gamepad1.right_stick_x;
             if(gamepad1.a){
-                if(FocusMode){
-                    FocusMode = false;
-                    //Focus Mode enables slower move speed for precision
-                }
-                else{
-                    FocusMode = true;
-                }
-            }
-            if(FocusMode){
                 Move_Power = 0.5;
             }
             else{
