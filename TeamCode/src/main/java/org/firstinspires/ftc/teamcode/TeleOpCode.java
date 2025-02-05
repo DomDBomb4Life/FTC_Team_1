@@ -11,22 +11,33 @@ public class TeleOpCode extends LinearOpMode{
     //WHEELS!
     private DcMotor R_MOTOR, L_MOTOR;
     //private UltrasonicSensor ULT_SENSOR;
-    private Servo ARM_SERVO;
+    private Servo ARM_SERVO, PLANE_SERVO, HAND_SERVO, PINCHER_SERVO;
     @Override
     public void runOpMode(){
-        int Move_Power = 1;
+        double Move_Power = 1;
         boolean launch = false;
+        boolean grab = false
+        boolean grabButtonPressed = false;
+        double armServoPosition = -90;
+        double handServoPosition = 90;
         R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
         L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
         R_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
         L_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
         //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
+        ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
         PLANE_SERVO = hardwareMap.get(Servo.class, "Plane Servo");
+        //HAND_SERVO = hardwareMap.get(Servo.class, "Hand Servo");
+        //PINCHER_SERVO = hardwareMap.get(Servo.class, "Pincher Servo");
         PLANE_SERVO.setPosition(0);
+        ARM_SERVO.setPosition(-90);
         waitForStart();
         while(opModeIsActive()){
-            double LStickY = gamepad1.left_stick_y;
-            double RStickX = gamepad1.right_stick_x;
+            double LStick1Y = gamepad1.left_stick_y;
+            double RStick1X = gamepad1.right_stick_x;
+            double LStick2Y = gamepad2.left_stick_y;
+            double RStick2Y = gamepad2.right_stick_y;
+            //GAMEPAD1 CODE START     \/
             if(gamepad1.a){
                 Move_Power = 0.5;
             }
@@ -36,18 +47,65 @@ public class TeleOpCode extends LinearOpMode{
             if(gamepad1.x){
                 PLANE_SERVO.setPosition(90);
             }
-            if(RStickX != 0){
-                R_MOTOR.setPower(RStickX*Move_Power);
-                L_MOTOR.setPower(-RStickX*Move_Power);
+            if(RStick1X != 0){
+                R_MOTOR.setPower(RStick1X*Move_Power);
+                L_MOTOR.setPower(-RStick1X*Move_Power);
             }
-            else if(LStickY != 0){
-                R_MOTOR.setPower(LStickY*Move_Power);
-                L_MOTOR.setPower(LStickY*Move_Power);
+            else if(LStick1Y != 0){
+                R_MOTOR.setPower(LStick1Y*Move_Power);
+                L_MOTOR.setPower(LStick1Y*Move_Power);
             }
             else{
                 R_MOTOR.setPower(0);
                 L_MOTOR.setPower(0);
             }
+            //GAMEPAD1 CODE END       /\
+            //GAMEPAD2 CODE START     \/
+            if(grabButtonPressed == false){
+                if(gamepad2.a){
+                    if(grab){
+                        grab = false;
+                    }
+                    else{
+                        grab = true;
+                    }
+                }
+            }
+            if(gamepad2.a){
+                grabButtonPressed = true;
+            }
+            else{
+                grabButtonPressed = false;
+            }
+            // if(grab){
+            //     PINCHER_SERVO.setPosition(90);
+            // }
+            // else{
+            //     PINCHER_SERVO.setPosition(0);
+            // }
+            if(armServoPosition + 1 <= 90 && armServoPosition - 1 >= -90){
+                if(LStick2Y != 0){
+                    if(LStick2Y < 0){
+                        armServoPosition -= 1;
+                    }
+                    else{
+                        armServoPosition += 1;
+                    }
+                    ARM_SERVO.setPosition(armServoPosition);
+                }
+            }
+            // if(handServoPosition + 1 <= 90 && handServoPosition - 1 >= -75){
+            //     if(RStick2Y != 0){
+            //         if(RStick2Y < 0){
+            //             handServoPosition -= 1;
+            //         }
+            //         else{
+            //             handServoPosition += 1;
+            //         }
+            // //         HAND_SERVO.setPosition(handServoPosition);
+            //     }
+            // }
+            //GAMEPAD2 CODE END       /\
         }
     }
 }
