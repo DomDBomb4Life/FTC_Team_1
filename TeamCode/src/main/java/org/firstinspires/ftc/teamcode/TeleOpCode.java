@@ -16,7 +16,7 @@ public class TeleOpCode extends LinearOpMode{
     public void runOpMode(){
         double Move_Power = 1;
         boolean launch = false;
-        boolean grab = false
+        boolean grab = false;
         boolean grabButtonPressed = false;
         double armServoPosition = -90;
         double handServoPosition = 90;
@@ -86,14 +86,17 @@ public class TeleOpCode extends LinearOpMode{
             if(armServoPosition + 0.1 <= 90 && armServoPosition - 0.1 >= -90){
                 if(LStick2Y != 0){
                     if(LStick2Y < 0){
-                        armServoPosition -= 0.1;
+                        ARM_SERVO.setPosition(ARM_SERVO.getPosition() - 0.1);
+                        telemetry.addData("Arm Position -: ", ARM_SERVO.getPosition());
                     }
                     else{
-                        armServoPosition += 0.1;
+                        ARM_SERVO.setPosition(ARM_SERVO.getPosition() + 0.1);
+                        telemetry.addData("Arm Position +: ", ARM_SERVO.getPosition());
                     }
-                    ARM_SERVO.setPosition(armServoPosition);
                 }
             }
+            telemetry.addData("Arm Position: ", ARM_SERVO.getPosition);
+            telemetry.update();
             // if(handServoPosition + 0.1 <= 90 && handServoPosition - 0.1 >= -75){
             //     if(RStick2Y != 0){
             //         if(RStick2Y < 0){
