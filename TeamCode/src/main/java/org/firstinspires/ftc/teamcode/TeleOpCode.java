@@ -39,7 +39,7 @@ public class TeleOpCode extends LinearOpMode{
             double RStick2Y = gamepad2.right_stick_y;
             //GAMEPAD1 CODE START     \/
             if(gamepad1.a){
-                Move_Power = 0.5;
+                Move_Power = 0.25;
             }
             else{
                 Move_Power = 1;
@@ -83,24 +83,24 @@ public class TeleOpCode extends LinearOpMode{
             // else{
             //     PINCHER_SERVO.setPosition(0);
             // }
-            if(armServoPosition + 1 <= 90 && armServoPosition - 1 >= -90){
+            if(armServoPosition + 0.1 <= 90 && armServoPosition - 0.1 >= -90){
                 if(LStick2Y != 0){
                     if(LStick2Y < 0){
-                        armServoPosition -= 1;
+                        armServoPosition -= 0.1;
                     }
                     else{
-                        armServoPosition += 1;
+                        armServoPosition += 0.1;
                     }
                     ARM_SERVO.setPosition(armServoPosition);
                 }
             }
-            // if(handServoPosition + 1 <= 90 && handServoPosition - 1 >= -75){
+            // if(handServoPosition + 0.1 <= 90 && handServoPosition - 0.1 >= -75){
             //     if(RStick2Y != 0){
             //         if(RStick2Y < 0){
-            //             handServoPosition -= 1;
+            //             handServoPosition -= 0.1;
             //         }
             //         else{
-            //             handServoPosition += 1;
+            //             handServoPosition += 0.1;
             //         }
             // //         HAND_SERVO.setPosition(handServoPosition);
             //     }
