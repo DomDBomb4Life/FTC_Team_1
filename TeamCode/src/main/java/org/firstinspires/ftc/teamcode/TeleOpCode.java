@@ -86,16 +86,16 @@ public class TeleOpCode extends LinearOpMode{
             if(armServoPosition + 0.1 <= 90 && armServoPosition - 0.1 >= -90){
                 if(LStick2Y != 0){
                     if(LStick2Y < 0){
-                        ARM_SERVO.setPosition(ARM_SERVO.getPosition() - 0.1);
-                        telemetry.addData("Arm Position -: ", ARM_SERVO.getPosition());
+                        ARM_SERVO.setPosition(armServoPosition - 0.1);
+                        telemetry.addData("Arm Position -: ", armServoPosition);
                     }
                     else{
-                        ARM_SERVO.setPosition(ARM_SERVO.getPosition() + 0.1);
-                        telemetry.addData("Arm Position +: ", ARM_SERVO.getPosition());
+                        ARM_SERVO.setPosition(armServoPosition + 0.1);
+                        telemetry.addData("Arm Position +: ", armServoPosition);
                     }
                 }
             }
-            telemetry.addData("Arm Position: ", ARM_SERVO.getPosition());
+            telemetry.addData("Arm Position: ", armServoPosition);
             telemetry.update();
             // if(handServoPosition + 0.1 <= 90 && handServoPosition - 0.1 >= -75){
             //     if(RStick2Y != 0){
