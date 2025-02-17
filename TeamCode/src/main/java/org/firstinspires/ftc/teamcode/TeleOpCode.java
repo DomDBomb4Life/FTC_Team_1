@@ -33,7 +33,8 @@ public class TeleOpCode extends LinearOpMode{
         ARM_SERVO.setPosition(-90);
         waitForStart();
         while(opModeIsActive()){
-            double LStick1Y = gamepad1.left_stick_y;
+            double RightTrigger = gamepad1.right_trigger;
+            double LeftTrigger = gamepad1.left_trigger;
             double RStick1X = gamepad1.right_stick_x;
             double LStick2Y = gamepad2.left_stick_y;
             double RStick2Y = gamepad2.right_stick_y;
@@ -44,6 +45,9 @@ public class TeleOpCode extends LinearOpMode{
             else{
                 Move_Power = 1;
             }
+            if(LeftTrigger != 0){
+                Move_Power = -Move_Power
+            }
             if(gamepad1.x){
                 PLANE_SERVO.setPosition(90);
             }
@@ -51,9 +55,9 @@ public class TeleOpCode extends LinearOpMode{
                 R_MOTOR.setPower(RStick1X*Move_Power);
                 L_MOTOR.setPower(-RStick1X*Move_Power);
             }
-            else if(LStick1Y != 0){
-                R_MOTOR.setPower(LStick1Y*Move_Power);
-                L_MOTOR.setPower(LStick1Y*Move_Power);
+            else if(RightTrigger != 0){
+                R_MOTOR.setPower(RightTrigger*Move_Power);
+                L_MOTOR.setPower(RightTrigger*Move_Power);
             }
             else{
                 R_MOTOR.setPower(0);
