@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import java.lang.Math;
 @TeleOp(name = "Drive")
 public class TeleOpCode extends LinearOpMode{
@@ -24,7 +25,7 @@ public class TeleOpCode extends LinearOpMode{
        L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
        //R_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
        L_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
-       //ULT_SENSOR = hardwareMap.get(UltrasonicSensor.class, "Ultrasonic Sensor");
+       //ULT_SENSOR = hardwareMap.get(DistanceSensor.class, "Ultrasonic Sensor");
        ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
        PLANE_SERVO = hardwareMap.get(Servo.class, "Plane Servo");
        //HAND_SERVO = hardwareMap.get(Servo.class, "Hand Servo");
@@ -99,10 +100,10 @@ public class TeleOpCode extends LinearOpMode{
                    telemetry.addData("Arm Position +: ", armServoPosition);
                }
            }
-           if (armServoPosition >= 90){
+           if (armServoPosition > 90){
                armServoPosition = 90;
            }
-           else if (armServoPosition <= -90){
+           else if (armServoPosition < -90){
                armServoPosition = -90;
            }
            telemetry.addData("Arm Position: ", armServoPosition);
