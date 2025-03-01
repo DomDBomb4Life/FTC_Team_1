@@ -20,6 +20,7 @@ public class TeleOpCode extends LinearOpMode{
        boolean grab = false;
        boolean grabButtonPressed = false;
        double armServoPosition = -90;
+       //0.1,0.6,0.9
        double handServoPosition = 90;
        R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
        L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
@@ -28,10 +29,10 @@ public class TeleOpCode extends LinearOpMode{
        //ULT_SENSOR = hardwareMap.get(DistanceSensor.class, "Ultrasonic Sensor");
        ARM_SERVO = hardwareMap.get(Servo.class, "Arm Servo");
        PLANE_SERVO = hardwareMap.get(Servo.class, "Plane Servo");
-       //HAND_SERVO = hardwareMap.get(Servo.class, "Hand Servo");
-       //PINCHER_SERVO = hardwareMap.get(Servo.class, "Pincher Servo");
-       PLANE_SERVO.setPosition(0);
-       ARM_SERVO.setPosition(-90);
+       HAND_SERVO = hardwareMap.get(Servo.class, "Hand Servo");
+       PINCHER_SERVO = hardwareMap.get(Servo.class, "Pincher Servo");
+       PLANE_SERVO.setPosition(0.3);
+       ARM_SERVO.setPosition(0);
        waitForStart();
        while(opModeIsActive()){
            double RightTrigger = gamepad1.right_trigger;
@@ -82,43 +83,32 @@ public class TeleOpCode extends LinearOpMode{
            else{
                grabButtonPressed = false;
            }
-           // if(grab){
-           //     PINCHER_SERVO.setPosition(90);
-           // }
-           // else{
-           //     PINCHER_SERVO.setPosition(0);
-           // }
+            if(grab){
+                PINCHER_SERVO.setPosition(1);
+            }
+            else{
+                PINCHER_SERVO.setPosition(0);
+            }
            if(LStick2Y != 0){
                if(LStick2Y < 0){
-                   armServoPosition -= 0.01;
+                   armServoPosition -= 0.0025;
                    ARM_SERVO.setPosition(armServoPosition);
                    telemetry.addData("Arm Position -: ", armServoPosition);
                }
                else{
-                   armServoPosition += 0.01;
+                   armServoPosition += 0.0025;
                    ARM_SERVO.setPosition(armServoPosition);
                    telemetry.addData("Arm Position +: ", armServoPosition);
                }
            }
-           if (armServoPosition > 90){
-               armServoPosition = 90;
+           if (armServoPosition > 1){
+               armServoPosition = 1;
            }
-           else if (armServoPosition < -90){
-               armServoPosition = -90;
+           else if (armServoPosition < 0){
+               armServoPosition = 0;
            }
            telemetry.addData("Arm Position: ", armServoPosition);
            telemetry.update();
-           // if(handServoPosition + 0.1 <= 90 && handServoPosition - 0.1 >= -75){
-           //     if(RStick2Y != 0){
-           //         if(RStick2Y < 0){
-           //             handServoPosition -= 0.1;
-           //         }
-           //         else{
-           //             handServoPosition += 0.1;
-           //         }
-           // //         HAND_SERVO.setPosition(handServoPosition);
-           //     }
-           // }
            //GAMEPAD2 CODE END       /\
        }
    }
