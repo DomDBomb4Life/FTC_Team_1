@@ -93,7 +93,7 @@ public class TeleOpCode extends LinearOpMode{
                grabButtonPressed = true;
            }
            else{
-            grabButtonPressed = false
+            grabButtonPressed = false;
            }
                
            if(gamepad2.x){
