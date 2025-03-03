@@ -18,7 +18,9 @@ public class TeleOpCode extends LinearOpMode{
        double Move_Power = 1;
        boolean launch = false;
        boolean grab = false;
+       boolean score = false;
        boolean grabButtonPressed = false;
+       boolean scoreButtonPressed = false;
        double armServoPosition = -90;
        //0.1,0.6,0.9
        double handServoPosition = 90;
@@ -31,7 +33,7 @@ public class TeleOpCode extends LinearOpMode{
        PLANE_SERVO = hardwareMap.get(Servo.class, "Plane Servo");
        HAND_SERVO = hardwareMap.get(Servo.class, "Hand Servo");
        PINCHER_SERVO = hardwareMap.get(Servo.class, "Pincher Servo");
-       PLANE_SERVO.setPosition(0.3);
+       PLANE_SERVO.setPosition(0.8);
        ARM_SERVO.setPosition(0);
        waitForStart();
        while(opModeIsActive()){
@@ -51,7 +53,7 @@ public class TeleOpCode extends LinearOpMode{
                Move_Power = -Move_Power;
            }
            if(gamepad1.x){
-               PLANE_SERVO.setPosition(90);
+               PLANE_SERVO.setPosition(0);
            }
            if(RStick1X != 0){
                R_MOTOR.setPower(RStick1X*Move_Power);
@@ -77,11 +79,28 @@ public class TeleOpCode extends LinearOpMode{
                    }
                }
            }
+           if(scoreButtonPressed == false){
+               if(gamepad2.x){
+                   if(score){
+                       score = false;
+                   }
+                   else{
+                       score = true;
+                   }
+               }
+           }
            if(gamepad2.a){
                grabButtonPressed = true;
            }
            else{
-               grabButtonPressed = false;
+            grabButtonPressed = false
+           }
+               
+           if(gamepad2.x){
+               scoreButtonPressed = true;
+           }
+           else{
+               scoreButtonPressed = false;
            }
             if(grab){
                 PINCHER_SERVO.setPosition(1);
@@ -89,7 +108,13 @@ public class TeleOpCode extends LinearOpMode{
             else{
                 PINCHER_SERVO.setPosition(0);
             }
-           if(LStick2Y != 0){
+            if(score){
+                ARM_SERVO.setPosition(0.75);
+            }
+            else{
+                ARM_SERVO.setPosition(0);
+            }
+           if(LStick2Y != 0 && score == false){
                if(LStick2Y < 0){
                    armServoPosition -= 0.0025;
                    ARM_SERVO.setPosition(armServoPosition);
