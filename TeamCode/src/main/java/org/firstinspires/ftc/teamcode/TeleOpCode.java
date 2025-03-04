@@ -21,9 +21,9 @@ public class TeleOpCode extends LinearOpMode{
        boolean score = false;
        boolean grabButtonPressed = false;
        boolean scoreButtonPressed = false;
-       double armServoPosition = -90;
+       double armServoPosition = 0;
        //0.1,0.6,0.9
-       double handServoPosition = 90;
+       double handServoPosition = 0;
        R_MOTOR = hardwareMap.get(DcMotor.class, "Right Motor");
        L_MOTOR = hardwareMap.get(DcMotor.class, "Left Motor");
        //R_MOTOR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -39,7 +39,7 @@ public class TeleOpCode extends LinearOpMode{
        while(opModeIsActive()){
            double RightTrigger = gamepad1.right_trigger;
            double LeftTrigger = gamepad1.left_trigger;
-           double RStick1X = gamepad1.right_stick_x;
+           double LStick1X = gamepad1.left_stick_x;
            double LStick2Y = gamepad2.left_stick_y;
            double RStick2Y = gamepad2.right_stick_y;
            //GAMEPAD1 CODE START     \/
@@ -49,9 +49,6 @@ public class TeleOpCode extends LinearOpMode{
            else{
                Move_Power = 1;
            }
-           if(LeftTrigger != 0){
-               Move_Power = -Move_Power;
-           }
            if(gamepad1.x){
                PLANE_SERVO.setPosition(0);
            }
@@ -60,8 +57,12 @@ public class TeleOpCode extends LinearOpMode{
                L_MOTOR.setPower(-RStick1X*Move_Power);
            }
            else if(RightTrigger != 0){
-               R_MOTOR.setPower(RightTrigger*Move_Power);
-               L_MOTOR.setPower(RightTrigger*Move_Power);
+               R_MOTOR.setPower(RightTrigger*-Move_Power);
+               L_MOTOR.setPower(RightTrigger*-Move_Power);
+           }
+           else if(LeftTrigger != 0){
+               R_MOTOR.setPower(LeftTrigger*Move_Power);
+               L_MOTOR.setPower(LeftTrigger*Move_Power);
            }
            else{
                R_MOTOR.setPower(0);
@@ -117,12 +118,10 @@ public class TeleOpCode extends LinearOpMode{
            if(LStick2Y != 0 && score == false){
                if(LStick2Y < 0){
                    armServoPosition -= 0.0025;
-                   ARM_SERVO.setPosition(armServoPosition);
                    telemetry.addData("Arm Position -: ", armServoPosition);
                }
                else{
                    armServoPosition += 0.0025;
-                   ARM_SERVO.setPosition(armServoPosition);
                    telemetry.addData("Arm Position +: ", armServoPosition);
                }
            }
@@ -132,6 +131,7 @@ public class TeleOpCode extends LinearOpMode{
            else if (armServoPosition < 0){
                armServoPosition = 0;
            }
+           ARM_SERVO.setPosition(armServoPosition);
            telemetry.addData("Arm Position: ", armServoPosition);
            telemetry.update();
            //GAMEPAD2 CODE END       /\
